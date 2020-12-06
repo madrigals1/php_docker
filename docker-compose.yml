@@ -12,6 +12,8 @@ services:
       - "${DB_PORT}:3306"
     networks:
       - default
+    volumes:
+      - "./db:/var/lib/mysql"
 
   php:
     build: .

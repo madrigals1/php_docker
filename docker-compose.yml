@@ -1,0 +1,21 @@
+version: "3"
+
+services:
+  php-fpm:
+    image: php:7.2-fpm-alpine
+    volumes:
+      - "./html:/var/www/html"
+    ports:
+      - "${PORT}:9000"
+    environment:
+      VIRTUAL_HOST: ${SSL_DOMAIN}
+      VIRTUAL_PORT: ${PORT}
+      LETSENCRYPT_HOST: ${SSL_DOMAIN}
+      LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL}
+    networks:
+      - proxy
+
+networks:
+  proxy:
+    external:
+      name: ${NGINX_PROXY_NETWORK}

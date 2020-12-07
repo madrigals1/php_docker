@@ -19,6 +19,7 @@ services:
     build: .
     volumes:
       - "./php:/var/www/html"
+      - "${DOCKER_STATIC_HOSTING}:${DOCKER_STATIC_HOSTING}:rw"
     ports:
       - "${PHP_PORT}:80"
     depends_on:

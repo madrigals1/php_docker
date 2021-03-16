@@ -3,6 +3,7 @@ version: "3"
 services:
   db:
     image: mysql:5.7
+    container_name: mysql
     environment:
       MYSQL_ROOT_PASSWORD: ${SECRET_KEY}
       MYSQL_DATABASE: ${DB_NAME}
@@ -17,6 +18,7 @@ services:
 
   php:
     build: .
+    container_name: php_server
     volumes:
       - "./php:/var/www/html"
       - "${DOCKER_STATIC_HOSTING}:${DOCKER_STATIC_HOSTING}:rw"
@@ -35,7 +37,6 @@ services:
       VIRTUAL_HOST: ${PF_SSL_DOMAIN}
       VIRTUAL_PORT: ${PHP_PORT}
       LETSENCRYPT_HOST: ${PF_SSL_DOMAIN}
-      LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL}
     stdin_open: true
     tty: true
     networks:
@@ -44,6 +45,7 @@ services:
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
     links: 
       - db
     ports:
@@ -55,7 +57,6 @@ services:
       VIRTUAL_HOST: ${PMA_SSL_DOMAIN}
       VIRTUAL_PORT: ${PMA_PORT}
       LETSENCRYPT_HOST: ${PMA_SSL_DOMAIN}
-      LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL}
     networks:
       - default
       - proxy

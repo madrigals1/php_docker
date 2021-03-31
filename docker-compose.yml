@@ -40,7 +40,7 @@ services:
     stdin_open: true
     tty: true
     networks:
-      - proxy
+      - https
       - default
 
   phpmyadmin:
@@ -58,10 +58,10 @@ services:
       VIRTUAL_PORT: ${PMA_PORT}
       LETSENCRYPT_HOST: ${PMA_SSL_DOMAIN}
     networks:
+      - https
       - default
-      - proxy
 
 networks:
-  proxy:
+  https:
     external:
-      name: ${NGINX_PROXY_NETWORK}
+      name: ${HTTPS_NETWORK}

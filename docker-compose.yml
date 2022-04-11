@@ -34,9 +34,6 @@ services:
       SECRET_KEY: ${SECRET_KEY}
       STATIC_FILE_HOSTING: ${DOCKER_STATIC_HOSTING}
       STATIC_FILE_HOSTING_URL: ${DOCKER_STATIC_HOSTING_URL}
-      VIRTUAL_HOST: ${PF_SSL_DOMAIN}
-      VIRTUAL_PORT: ${PHP_PORT}
-      LETSENCRYPT_HOST: ${PF_SSL_DOMAIN}
     stdin_open: true
     tty: true
     networks:
@@ -46,7 +43,7 @@ services:
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     container_name: phpmyadmin
-    links: 
+    links:
       - db
     ports:
       - ${PMA_PORT}:80
@@ -54,9 +51,6 @@ services:
       MYSQL_USER: ${DB_USER}
       MYSQL_PASSWORD: ${DB_PASSWORD}
       MYSQL_ROOT_PASSWORD: ${SECRET_KEY}
-      VIRTUAL_HOST: ${PMA_SSL_DOMAIN}
-      VIRTUAL_PORT: ${PMA_PORT}
-      LETSENCRYPT_HOST: ${PMA_SSL_DOMAIN}
     networks:
       - https
       - default

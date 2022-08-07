@@ -1,4 +1,4 @@
-version: "3"
+version: "3."
 
 services:
   db:
@@ -13,6 +13,7 @@ services:
       - "${DB_PORT}:3306"
     networks:
       - default
+    restart: always
     volumes:
       - "./db:/var/lib/mysql"
 
@@ -36,6 +37,7 @@ services:
       STATIC_FILE_HOSTING_URL: ${DOCKER_STATIC_HOSTING_URL}
     stdin_open: true
     tty: true
+    restart: always
     networks:
       - https
       - default
@@ -51,11 +53,12 @@ services:
       MYSQL_USER: ${DB_USER}
       MYSQL_PASSWORD: ${DB_PASSWORD}
       MYSQL_ROOT_PASSWORD: ${SECRET_KEY}
+    restart: always
     networks:
       - https
       - default
 
 networks:
   https:
-    external:
-      name: ${HTTPS_NETWORK}
+    name: ${HTTPS_NETWORK}
+    external: true      
